@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+.git/
+.claude/
+Datasets/
+datasets/
+data/
+ishita/notebooks/
+viraj/notebooks/
+*.ipynb
+*.pyc

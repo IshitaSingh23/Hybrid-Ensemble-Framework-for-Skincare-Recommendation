@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Up Skin · Skincare you'll likely love</title>
+  <meta name="description" content="A class-demo skincare recommender. Discover products you'll likely love — with the model's confidence shown honestly."/>
+  <link rel="icon" type="image/svg+xml" href="./assets/motifs/petal.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="./site.css"/>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    // ---- Asset path ----
+    window.UPSKIN_ASSETS = "./assets";
+
+    // ---- API base URL (override at runtime) ----
+    // 1. window.__UPSKIN_API_URL — runtime override (set before this script tag if needed).
+    // 2. NEXT_PUBLIC_UPSKIN_API_URL — build-time env var if served from a Next/Vite app.
+    // 3. Default: http://localhost:8000
+    //
+    // Example (override via query string):
+    //   ?api=https://upskin-api.example.com
+    (function () {
+      var qs = new URLSearchParams(window.location.search);
+      var override = qs.get("api");
+      if (override && !window.__UPSKIN_API_URL) {
+        window.__UPSKIN_API_URL = override;
+      }
+      // Opt into the offline mock layer with `?mock=1` for design preview.
+      if (qs.get("mock") === "1") {
+        window.__UPSKIN_USE_MOCK = true;
+      }
+    })();
+  </script>
+
+  <!-- React (UMD) and Babel (browser JSX compiler) for the prototype runtime. -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+
+  <!-- Offline mock layer (loaded so design preview works with ?mock=1; harmless otherwise). -->
+  <script src="./mockData.js"></script>
+  <script src="./mockExtras.js"></script>
+
+  <!-- API client (single source of truth; defaults to real FastAPI). -->
+  <script src="./api.js"></script>
+
+  <!-- Components -->
+  <script type="text/babel" src="./components.jsx"></script>
+  <script type="text/babel" src="./Skeletons.jsx"></script>
+  <script type="text/babel" src="./States.jsx"></script>
+  <script type="text/babel" src="./Welcome.jsx"></script>
+  <script type="text/babel" src="./DemoProfileFlow.jsx"></script>
+  <script type="text/babel" src="./BuildProfileFlow.jsx"></script>
+  <script type="text/babel" src="./Recommendations.jsx"></script>
+  <script type="text/babel" src="./ModelTransparency.jsx"></script>
+  <script type="text/babel" src="./site.jsx"></script>
+</body>
+</html>

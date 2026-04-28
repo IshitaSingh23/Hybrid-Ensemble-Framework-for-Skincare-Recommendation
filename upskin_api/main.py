@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import os
+
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 
 from .recommender import get_service
 from .schemas import CustomRecommendationRequest, ProductSearchItem, RecommendationResponse
@@ -10,6 +13,21 @@ app = FastAPI(
     title="Up Skin Recommendation API",
     version="0.1.0",
     description="Model-backed handoff API for uncertainty-aware skincare recommendations.",
+)
+
+default_origins = "http://localhost:5173,http://127.0.0.1:5173"
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("UPSKIN_CORS_ORIGINS", default_origins).split(",")
+    if origin.strip()
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 

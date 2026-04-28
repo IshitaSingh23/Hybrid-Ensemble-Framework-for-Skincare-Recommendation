@@ -1,0 +1,217 @@
+/* ============================================================
+   Up Skin — Design tokens
+   Soft beauty-editorial. Cream canvas, petal accents, calm motion.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ---------- Color: canvas + neutrals ---------------------- */
+  --cream:           oklch(98.4% 0.012 75);   /* primary canvas, warm off-white */
+  --cream-deep:      oklch(96.5% 0.018 70);   /* slight depth on cream */
+  --warm-white:      oklch(99.2% 0.006 80);   /* pure surface, still warm */
+  --shell:           oklch(94.5% 0.022 60);   /* faint pink-cream tint */
+
+  /* ---------- Color: brand romantic palette ----------------- */
+  --petal:           oklch(91% 0.045 12);     /* soft floral pink, surfaces */
+  --petal-deep:      oklch(83% 0.075 14);     /* denser petal, chips */
+  --blush:           oklch(86% 0.060 22);     /* warm blush, accents */
+  --rose:            oklch(63% 0.155 18);     /* primary CTA */
+  --rose-deep:       oklch(56% 0.165 18);     /* hover/press */
+  --berry:           oklch(46% 0.140 12);     /* deep accent, rare */
+
+  /* ---------- Color: supporting --------------------------- */
+  --sage:            oklch(82% 0.055 145);    /* selected, soft positive */
+  --sage-deep:       oklch(58% 0.070 145);    /* sage text */
+  --honey:           oklch(88% 0.080 85);     /* warm secondary */
+
+  /* ---------- Color: deep contrast (text, wordmark) -------- */
+  --aubergine:       oklch(22% 0.045 340);    /* primary text, headings */
+  --aubergine-soft:  oklch(38% 0.040 340);    /* secondary text */
+
+  /* ---------- Color: text + UI --------------------------- */
+  --text-primary:    var(--aubergine);
+  --text-secondary:  var(--aubergine-soft);
+  --text-muted:      oklch(55% 0.020 340);
+  --text-on-rose:    oklch(99% 0.005 80);
+
+  /* ---------- Color: lines ----------------------------- */
+  --line-faint:      oklch(91% 0.014 30);     /* warm hairline */
+  --line:            oklch(85% 0.018 25);     /* dividers */
+  --line-strong:     oklch(70% 0.025 20);     /* emphasis */
+
+  /* ---------- Color: confidence (calm) ------------------- */
+  --conf-high-bg:    oklch(94% 0.040 145);    /* sage tint */
+  --conf-high-fg:    oklch(40% 0.075 145);
+  --conf-med-bg:     oklch(94% 0.045 75);     /* honey tint */
+  --conf-med-fg:     oklch(45% 0.085 75);
+  --conf-low-bg:     oklch(94% 0.030 25);     /* dusty blush, gentle */
+  --conf-low-fg:     oklch(48% 0.060 25);
+
+  /* ---------- Type: families ----------------------------- */
+  --font-display: "Fraunces", "Times New Roman", Georgia, serif;
+  --font-text:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---------- Type: scale (px values for clarity) -------- */
+  --fs-eyebrow:    11px;
+  --fs-caption:    12px;
+  --fs-meta:       13px;
+  --fs-body:       16px;
+  --fs-body-lg:    18px;
+  --fs-h6:         18px;
+  --fs-h5:         22px;
+  --fs-h4:         28px;
+  --fs-h3:         36px;
+  --fs-h2:         48px;
+  --fs-h1:         64px;
+  --fs-display:    88px;
+
+  /* ---------- Type: line-height + tracking ------------- */
+  --lh-tight:      1.05;
+  --lh-snug:       1.2;
+  --lh-normal:     1.45;
+  --lh-relaxed:    1.6;
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:   0;
+  --tracking-eyebrow:  0.14em;
+
+  /* ---------- Spacing (4px base) ----------------------- */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-14: 56px;
+  --sp-20: 80px;
+  --sp-28: 112px;
+
+  /* ---------- Radii ---------------------------------- */
+  --r-xs:    4px;
+  --r-sm:    8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-pill: 999px;
+
+  /* ---------- Shadows (warm-tinted) ------------------- */
+  --shadow-soft:   0 1px 2px rgba(95, 30, 50, 0.04),
+                   0 8px 24px rgba(95, 30, 50, 0.05);
+  --shadow-lift:   0 2px 4px rgba(95, 30, 50, 0.06),
+                   0 14px 40px rgba(95, 30, 50, 0.08);
+  --shadow-modal:  0 8px 16px rgba(50, 20, 35, 0.08),
+                   0 32px 80px rgba(50, 20, 35, 0.18);
+  --focus-ring:    0 0 0 2px var(--cream),
+                   0 0 0 4px oklch(63% 0.155 18 / 0.55);
+
+  /* ---------- Motion --------------------------------- */
+  --ease-calm:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-micro:     160ms;
+  --dur-default:   240ms;
+  --dur-step:      420ms;
+  --dur-stagger:   600ms;
+
+  /* ---------- Icon sizes ----------------------------- */
+  --icon-sm: 14px;
+  --icon-md: 18px;
+  --icon-lg: 24px;
+
+  /* ---------- Layout --------------------------------- */
+  --container-max: 1120px;
+  --gutter:        24px;
+}
+
+/* ============================================================
+   Semantic element styles
+   ============================================================ */
+
+html, body {
+  background: var(--cream);
+  color: var(--text-primary);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  font-weight: 400;
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+h5 { font-size: var(--fs-h5); }
+h6 {
+  font-family: var(--font-text);
+  font-size: var(--fs-h6);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-family: var(--font-text);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: var(--tracking-tight);
+  font-variation-settings: "opsz" 144;
+}
+
+.meta {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+a {
+  color: var(--rose-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-micro) var(--ease-calm);
+}
+a:hover { color: var(--berry); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

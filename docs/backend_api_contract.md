@@ -11,6 +11,13 @@ python -m pip install -r requirements-api.txt
 uvicorn upskin_api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+If the frontend is hosted on a different origin, set CORS explicitly:
+
+```bash
+UPSKIN_CORS_ORIGINS="http://localhost:5173,https://your-frontend.vercel.app" \
+uvicorn upskin_api.main:app --host 0.0.0.0 --port 8000
+```
+
 For faster local tests, lower MC samples:
 
 ```bash
@@ -106,6 +113,22 @@ Response recommendation item:
 }
 ```
 
+## Frontend (site/)
+
+The production frontend lives in `site/`. It is a static HTML/JSX bundle that
+calls these endpoints directly. Run it alongside the backend:
+
+```bash
+# from the repo root, in a second terminal
+python -m http.server 5173 --directory site
+```
+
+Open <http://localhost:5173/>. The page resolves the API base URL from
+`window.__UPSKIN_API_URL` (or `NEXT_PUBLIC_UPSKIN_API_URL` when bundled), and
+defaults to `http://localhost:8000`. Pass `?api=<url>` on the page URL to
+override at runtime, or `?mock=1` to use the offline design preview layer
+instead of the live backend. Full setup notes live in `site/README.md`.
+
 ## Hosting
 
 Host the backend/model as a Dockerized FastAPI service on Render or Railway. Host the frontend on Vercel and point it at the backend URL.
@@ -113,4 +136,3 @@ Host the backend/model as a Dockerized FastAPI service on Render or Railway. Hos
 Do not use Vercel serverless for the PyTorch model service unless the model bundle is substantially simplified. The Python runtime exists, but this project is a better fit for a normal Docker web service because it needs PyTorch, sklearn/joblib artifacts, pandas, and CSV/NPZ artifact loading.
 
 Deployment note: `artifacts/` is ignored by git in this repo. For deployment, either attach the artifacts at build/runtime, use a persistent disk, or intentionally publish the required model bundle to the deployment target. The API will fail fast if required artifacts are missing.
-

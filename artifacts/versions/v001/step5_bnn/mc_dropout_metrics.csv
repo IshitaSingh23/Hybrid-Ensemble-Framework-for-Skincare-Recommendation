@@ -1,0 +1,9 @@
+split,model,rmse,mae,pred_mean
+validation,mf_score,0.797,0.5043,4.4635
+validation,content_rating_score,0.9773,0.7863,4.2556
+validation,hybrid_score,0.8012,0.5793,4.4011
+validation,bnn_mc_mean,0.7826,0.5119,4.4761
+test,mf_score,0.7786,0.4888,4.4662
+test,content_rating_score,0.9927,0.8019,4.2616
+test,hybrid_score,0.7922,0.5726,4.4048
+test,bnn_mc_mean,0.7636,0.4956,4.4663

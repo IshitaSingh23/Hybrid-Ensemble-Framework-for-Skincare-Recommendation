@@ -1,0 +1,7 @@
+split,confidence_bucket,rows,mean_predicted_score,mean_risk_adjusted_score,mean_uncertainty,mean_abs_error,rmse,calibrated_interval_coverage
+test,high_confidence,363,4.8942,4.872,0.0444,0.1768,0.3574,0.9477
+test,medium_confidence,372,4.6022,4.5596,0.0853,0.5041,0.7218,0.9355
+test,low_confidence,311,3.8041,3.7249,0.1584,0.8575,1.0904,0.9582
+validation,high_confidence,354,4.8927,4.8703,0.0449,0.1702,0.3357,0.9576
+validation,medium_confidence,353,4.6021,4.5588,0.0864,0.5552,0.798,0.932
+validation,low_confidence,354,3.9339,3.8562,0.1554,0.8104,1.0432,0.9605

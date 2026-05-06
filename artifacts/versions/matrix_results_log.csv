@@ -1,0 +1,2 @@
+run_id,created_at,canonical_matrix_model,test_legacy_mf_rmse,test_ridge_rmse,test_ridge_mae,ridge_beats_legacy_mf
+v002,2026-05-05T23:18:31,ridge_ensemble,0.8293161376284509,0.7806867907341931,0.49122524774066767,True

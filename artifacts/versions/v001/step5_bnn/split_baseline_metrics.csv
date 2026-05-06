@@ -1,0 +1,10 @@
+split,model,rmse,mae,pred_min,pred_mean,pred_max
+train,mf_score,0.7954,0.4994,1.0,4.4507,5.0
+train,content_rating_score,1.031,0.8241,1.8298,4.2581,4.7706
+train,hybrid_score,0.8163,0.5857,1.9464,4.3929,4.9044
+validation,mf_score,0.797,0.5043,1.497,4.4635,5.0
+validation,content_rating_score,0.9773,0.7863,2.0079,4.2556,4.6808
+validation,hybrid_score,0.8012,0.5793,2.3124,4.4011,4.8886
+test,mf_score,0.7786,0.4888,1.2338,4.4662,5.0
+test,content_rating_score,0.9927,0.8019,1.9454,4.2616,4.6898
+test,hybrid_score,0.7922,0.5726,2.0753,4.4048,4.8979

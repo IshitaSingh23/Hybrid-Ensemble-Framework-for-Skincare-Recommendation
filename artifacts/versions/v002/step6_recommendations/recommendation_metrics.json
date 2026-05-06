@@ -1,0 +1,104 @@
+{
+  "run_id": "v002",
+  "candidate_feature_validation": {
+    "sample_user_count": 5,
+    "candidate_rows": 1500,
+    "max_candidates_per_user": 300,
+    "candidate_users": 5,
+    "candidate_products": 310,
+    "missing_required_feature_values": 0,
+    "uses_mf_proxy": true,
+    "uses_ensemble_proxy_features": true,
+    "mf_proxy_note": "Full candidate-level Ridge/GB/RF ensemble scores were not exported, so Step 14 uses transparent user/product/content proxy features for recommendation candidate scoring."
+  },
+  "recommendation_scoring_report": {
+    "candidate_rows_scored": 1500,
+    "candidate_users": 5,
+    "top_recommendations_rows": 50,
+    "top_n_per_user": 10,
+    "mc_samples": 100,
+    "mean_predicted_score": 3.861144542694092,
+    "mean_risk_adjusted_score": 3.794017791748047,
+    "mean_uncertainty": 0.13425272703170776,
+    "already_seen_rows": 0
+  },
+  "explanation_quality_report": {
+    "top_recommendation_rows": 50,
+    "rows_with_explanation": 50,
+    "avg_explanation_length_chars": 291.68,
+    "rows_with_high_confidence": 20,
+    "rows_with_medium_confidence": 14,
+    "rows_with_low_confidence": 16
+  },
+  "filter_report": {
+    "original_scored_candidate_rows": 1500,
+    "filtered_scored_candidate_rows": 1479,
+    "removed_candidate_rows": 21,
+    "original_top_recommendation_rows": 50,
+    "final_top_recommendation_rows": 50,
+    "users_with_final_recommendations": 5,
+    "top_n_per_user": 10,
+    "excluded_secondary_categories": [
+      "High Tech Tools",
+      "Wellness"
+    ],
+    "excluded_tertiary_categories": [
+      "Facial Cleansing Brushes",
+      "Facial Rollers",
+      "Hair Removal",
+      "Holistic Wellness",
+      "Teeth Whitening"
+    ]
+  },
+  "final_confidence_distribution": [
+    {
+      "confidence_bucket": "high_confidence",
+      "final_top_recommendation_count": 20
+    },
+    {
+      "confidence_bucket": "low_confidence",
+      "final_top_recommendation_count": 16
+    },
+    {
+      "confidence_bucket": "medium_confidence",
+      "final_top_recommendation_count": 14
+    }
+  ],
+  "final_category_distribution": [
+    {
+      "secondary_category": "Moisturizers",
+      "final_top_recommendation_count": 12
+    },
+    {
+      "secondary_category": "Masks",
+      "final_top_recommendation_count": 9
+    },
+    {
+      "secondary_category": "Treatments",
+      "final_top_recommendation_count": 9
+    },
+    {
+      "secondary_category": "Cleansers",
+      "final_top_recommendation_count": 7
+    },
+    {
+      "secondary_category": "Sunscreen",
+      "final_top_recommendation_count": 4
+    },
+    {
+      "secondary_category": "Mini Size",
+      "final_top_recommendation_count": 4
+    },
+    {
+      "secondary_category": "Value & Gift Sets",
+      "final_top_recommendation_count": 3
+    },
+    {
+      "secondary_category": "Lip Balms & Treatments",
+      "final_top_recommendation_count": 2
+    }
+  ],
+  "uses_mf_proxy": true,
+  "mf_proxy_note": "Full candidate-level MF scores were not exported. Step 6 uses a user/product mean proxy for candidate recommendation scoring.",
+  "step6_status": "complete_for_sample_users"
+}

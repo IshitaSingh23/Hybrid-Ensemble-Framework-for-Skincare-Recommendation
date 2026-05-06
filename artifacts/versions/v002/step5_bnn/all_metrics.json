@@ -1,0 +1,321 @@
+{
+  "run_metadata": {
+    "run_id": "v002",
+    "created_at": "2026-05-05T23:38:36",
+    "source_handoff_rows": 55640,
+    "modeling_rows": 55640,
+    "source_embedding_rows": 2420,
+    "source_embedding_dim": 384,
+    "notes": "Step 4 prepared modeling table from completed matrix + transformer handoff artifacts."
+  },
+  "model_report": {
+    "device": "mps",
+    "input_dim": 138,
+    "hidden_1": 128,
+    "hidden_2": 64,
+    "dropout_rate": 0.2,
+    "batch_size": 128,
+    "total_parameters": 26113,
+    "trainable_parameters": 26113,
+    "sample_prediction_min": 2.826474189758301,
+    "sample_prediction_mean": 2.9373769760131836,
+    "sample_prediction_max": 3.068074941635132,
+    "sample_target_min": 1.0,
+    "sample_target_mean": 4.4453125,
+    "sample_target_max": 5.0
+  },
+  "embedding_join_report": {
+    "original_modeling_shape": [
+      55640,
+      49
+    ],
+    "modeling_with_embeddings_shape": [
+      55640,
+      81
+    ],
+    "raw_embedding_dim": 384,
+    "reduced_embedding_dim": 32,
+    "embedding_join_missing_rows": 0,
+    "pca_total_explained_variance": 0.6157936453819275
+  },
+  "split_report": {
+    "total_rows": 55640,
+    "train_rows": 22299,
+    "val_rows": 5519,
+    "test_rows": 27822,
+    "train_users": 7396,
+    "val_users": 1850,
+    "test_users": 9246,
+    "numeric_feature_count": 69,
+    "categorical_feature_count": 3,
+    "total_pre_encoding_feature_count": 72,
+    "top_brand_count": 25,
+    "uses_upstream_source_split": true,
+    "source_split_counts": {
+      "test": 27822,
+      "validation": 27818
+    }
+  },
+  "overlap_report": {
+    "train_val_user_overlap": 0,
+    "train_test_user_overlap": 7396,
+    "val_test_user_overlap": 1850
+  },
+  "training_summary": {
+    "best_epoch": 15,
+    "epochs_run": 45,
+    "training_seconds": 33.15,
+    "best_train_rmse": 0.6916,
+    "best_train_mae": 0.4208,
+    "best_validation_rmse": 0.7337,
+    "best_validation_mae": 0.4306,
+    "validation_mf_rmse": 0.7578,
+    "validation_hybrid_rmse": 0.7774,
+    "bnn_beats_validation_mf_rmse": true,
+    "bnn_beats_validation_hybrid_rmse": true
+  },
+  "test_decision_report": {
+    "test_bnn_rmse": 0.7793,
+    "test_mf_rmse": 0.7807,
+    "test_hybrid_rmse": 0.804,
+    "bnn_beats_test_mf_rmse": true,
+    "bnn_beats_test_hybrid_rmse": true
+  },
+  "calibration_report": {
+    "target_coverage": 0.95,
+    "uncertainty_interval_multiplier": 13.861844327962183,
+    "validation_low_uncertainty_threshold": 0.04630618542432785,
+    "validation_high_uncertainty_threshold": 0.12395479778448741
+  },
+  "split_baseline_metrics": [
+    {
+      "split": "train",
+      "model": "mf_score",
+      "rmse": 0.7811,
+      "mae": 0.4957,
+      "pred_min": 1.2243,
+      "pred_mean": 4.4706,
+      "pred_max": 5.0
+    },
+    {
+      "split": "train",
+      "model": "content_rating_score",
+      "rmse": 1.0114,
+      "mae": 0.8179,
+      "pred_min": 1.8556,
+      "pred_mean": 4.2352,
+      "pred_max": 4.9784
+    },
+    {
+      "split": "train",
+      "model": "hybrid_score",
+      "rmse": 0.8058,
+      "mae": 0.5814,
+      "pred_min": 2.0666,
+      "pred_mean": 4.4,
+      "pred_max": 4.9369
+    },
+    {
+      "split": "validation",
+      "model": "mf_score",
+      "rmse": 0.7578,
+      "mae": 0.4734,
+      "pred_min": 1.637,
+      "pred_mean": 4.4942,
+      "pred_max": 5.0
+    },
+    {
+      "split": "validation",
+      "model": "content_rating_score",
+      "rmse": 0.9773,
+      "mae": 0.7976,
+      "pred_min": 2.0194,
+      "pred_mean": 4.2386,
+      "pred_max": 4.7765
+    },
+    {
+      "split": "validation",
+      "model": "hybrid_score",
+      "rmse": 0.7774,
+      "mae": 0.5607,
+      "pred_min": 2.3735,
+      "pred_mean": 4.4175,
+      "pred_max": 4.9048
+    },
+    {
+      "split": "test",
+      "model": "mf_score",
+      "rmse": 0.7807,
+      "mae": 0.4912,
+      "pred_min": 1.196,
+      "pred_mean": 4.4788,
+      "pred_max": 5.0
+    },
+    {
+      "split": "test",
+      "model": "content_rating_score",
+      "rmse": 1.0069,
+      "mae": 0.8139,
+      "pred_min": 1.8381,
+      "pred_mean": 4.2375,
+      "pred_max": 4.9747
+    },
+    {
+      "split": "test",
+      "model": "hybrid_score",
+      "rmse": 0.804,
+      "mae": 0.577,
+      "pred_min": 1.8846,
+      "pred_mean": 4.4064,
+      "pred_max": 4.9294
+    }
+  ],
+  "mc_metrics_table": [
+    {
+      "split": "validation",
+      "model": "mf_score",
+      "rmse": 0.7578,
+      "mae": 0.4734,
+      "pred_mean": 4.4942
+    },
+    {
+      "split": "validation",
+      "model": "content_rating_score",
+      "rmse": 0.9773,
+      "mae": 0.7976,
+      "pred_mean": 4.2386
+    },
+    {
+      "split": "validation",
+      "model": "hybrid_score",
+      "rmse": 0.7774,
+      "mae": 0.5607,
+      "pred_mean": 4.4175
+    },
+    {
+      "split": "validation",
+      "model": "bnn_mc_mean",
+      "rmse": 0.733,
+      "mae": 0.4356,
+      "pred_mean": 4.522
+    },
+    {
+      "split": "test",
+      "model": "mf_score",
+      "rmse": 0.7807,
+      "mae": 0.4912,
+      "pred_mean": 4.4788
+    },
+    {
+      "split": "test",
+      "model": "content_rating_score",
+      "rmse": 1.0069,
+      "mae": 0.8139,
+      "pred_mean": 4.2375
+    },
+    {
+      "split": "test",
+      "model": "hybrid_score",
+      "rmse": 0.804,
+      "mae": 0.577,
+      "pred_mean": 4.4064
+    },
+    {
+      "split": "test",
+      "model": "bnn_mc_mean",
+      "rmse": 0.7793,
+      "mae": 0.4687,
+      "pred_mean": 4.5007
+    }
+  ],
+  "calibration_metrics": [
+    {
+      "split": "validation",
+      "rows": 5519,
+      "mean_uncertainty": 0.0940999984741211,
+      "raw_interval_coverage": 0.0873,
+      "calibrated_interval_coverage": 0.95,
+      "mean_raw_interval_width": 0.35179999470710754,
+      "mean_calibrated_interval_width": 1.6783000230789185,
+      "uncertainty_abs_error_corr": 0.528
+    },
+    {
+      "split": "test",
+      "rows": 27822,
+      "mean_uncertainty": 0.09839999675750732,
+      "raw_interval_coverage": 0.0901,
+      "calibrated_interval_coverage": 0.9444,
+      "mean_raw_interval_width": 0.367900013923645,
+      "mean_calibrated_interval_width": 1.7441999912261963,
+      "uncertainty_abs_error_corr": 0.4994
+    }
+  ],
+  "confidence_bucket_summary": [
+    {
+      "split": "test",
+      "confidence_bucket": "high_confidence",
+      "rows": 8872,
+      "mean_predicted_score": 4.951300144195557,
+      "mean_risk_adjusted_score": 4.937399864196777,
+      "mean_uncertainty": 0.027799999341368675,
+      "mean_abs_error": 0.0964,
+      "rmse": 0.2689,
+      "calibrated_interval_coverage": 0.9558
+    },
+    {
+      "split": "test",
+      "confidence_bucket": "medium_confidence",
+      "rows": 9046,
+      "mean_predicted_score": 4.677299976348877,
+      "mean_risk_adjusted_score": 4.634399890899658,
+      "mean_uncertainty": 0.08569999784231186,
+      "mean_abs_error": 0.4444,
+      "rmse": 0.7044,
+      "calibrated_interval_coverage": 0.9256
+    },
+    {
+      "split": "test",
+      "confidence_bucket": "low_confidence",
+      "rows": 9904,
+      "mean_predicted_score": 3.9358999729156494,
+      "mean_risk_adjusted_score": 3.849299907684326,
+      "mean_uncertainty": 0.17329999804496765,
+      "mean_abs_error": 0.8245,
+      "rmse": 1.09,
+      "calibrated_interval_coverage": 0.9514
+    },
+    {
+      "split": "validation",
+      "confidence_bucket": "high_confidence",
+      "rows": 1840,
+      "mean_predicted_score": 4.952099800109863,
+      "mean_risk_adjusted_score": 4.938399791717529,
+      "mean_uncertainty": 0.027300000190734863,
+      "mean_abs_error": 0.086,
+      "rmse": 0.2415,
+      "calibrated_interval_coverage": 0.9641
+    },
+    {
+      "split": "validation",
+      "confidence_bucket": "medium_confidence",
+      "rows": 1839,
+      "mean_predicted_score": 4.688300132751465,
+      "mean_risk_adjusted_score": 4.6458001136779785,
+      "mean_uncertainty": 0.08489999920129776,
+      "mean_abs_error": 0.4194,
+      "rmse": 0.659,
+      "calibrated_interval_coverage": 0.9331
+    },
+    {
+      "split": "validation",
+      "confidence_bucket": "low_confidence",
+      "rows": 1840,
+      "mean_predicted_score": 3.925600051879883,
+      "mean_risk_adjusted_score": 3.8405001163482666,
+      "mean_uncertainty": 0.17000000178813934,
+      "mean_abs_error": 0.8015,
+      "rmse": 1.0578,
+      "calibrated_interval_coverage": 0.9527
+    }
+  ]
+}

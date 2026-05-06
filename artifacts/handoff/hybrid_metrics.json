@@ -1,0 +1,47 @@
+{
+  "matrix_metrics_source": "artifacts/matrix/metrics.json",
+  "global_mean": null,
+  "user_item_baseline": null,
+  "biased_mf": {
+    "evaluated_rows": 27822,
+    "mae": 0.49122524774066767,
+    "rmse": 0.7806867907341931
+  },
+  "content_only": {
+    "rmse": 1.0057737111168612,
+    "mae": 0.8138789058877871,
+    "evaluated_rows": 55640
+  },
+  "hybrid": {
+    "alpha": 0.7,
+    "rmse": 0.8021039974326994,
+    "mae": 0.5771155883838441,
+    "evaluated_rows": 55640
+  },
+  "ranking": {
+    "mf": {},
+    "content": {
+      "hit_rate_at_5": 0.01904967292071023,
+      "hit_rate_at_10": 0.028682337718352383,
+      "hit_rate_at_20": 0.04341887714758105,
+      "evaluated_users": 9246
+    },
+    "hybrid": null,
+    "note": "Hybrid Hit Rate@K requires candidate-level MF scores; not recomputed in this notebook."
+  },
+  "decision_gate": {
+    "content_beats_mf_hit_rate_at_10": false,
+    "hybrid_beats_mf_rmse": false
+  },
+  "split_report": {
+    "train_rows": 121096,
+    "test_rows": 27822,
+    "mf_prediction_rows": 55640,
+    "handoff_rows": 55640,
+    "train_users": 9246,
+    "test_users": 9246,
+    "train_products": 1890,
+    "test_products": 1684,
+    "candidate_products": 1890
+  }
+}

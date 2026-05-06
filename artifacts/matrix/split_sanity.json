@@ -1,0 +1,10 @@
+{
+  "exported_prediction_rows": 55640,
+  "prediction_source_splits": {
+    "test": 27822,
+    "validation": 27818
+  },
+  "test_rows": 27822,
+  "train_rows": 121096,
+  "validation_rows": 27818
+}

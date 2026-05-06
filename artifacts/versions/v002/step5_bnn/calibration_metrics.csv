@@ -1,0 +1,3 @@
+split,rows,mean_uncertainty,raw_interval_coverage,calibrated_interval_coverage,mean_raw_interval_width,mean_calibrated_interval_width,uncertainty_abs_error_corr
+validation,5519,0.0941,0.0873,0.95,0.3518,1.6783,0.528
+test,27822,0.0984,0.0901,0.9444,0.3679,1.7442,0.4994

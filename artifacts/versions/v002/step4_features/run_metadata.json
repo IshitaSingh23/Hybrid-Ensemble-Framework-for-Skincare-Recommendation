@@ -1,0 +1,9 @@
+{
+  "run_id": "v002",
+  "created_at": "2026-05-05T23:38:36",
+  "source_handoff_rows": 55640,
+  "modeling_rows": 55640,
+  "source_embedding_rows": 2420,
+  "source_embedding_dim": 384,
+  "notes": "Step 4 prepared modeling table from completed matrix + transformer handoff artifacts."
+}

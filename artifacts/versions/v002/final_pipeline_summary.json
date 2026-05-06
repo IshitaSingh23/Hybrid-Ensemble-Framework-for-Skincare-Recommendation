@@ -1,0 +1,46 @@
+{
+  "run_id": "v002",
+  "proposal_steps_completed": [
+    "Step 4: combined matrix, transformer, metadata, and embedding features",
+    "Step 5: trained MC-dropout Bayesian neural network for score + uncertainty",
+    "Step 6: generated top product recommendations with confidence and explanations"
+  ],
+  "best_model": {
+    "model_type": "MC Dropout Bayesian Neural Network",
+    "best_epoch": 15,
+    "test_bnn_rmse": 0.7793,
+    "test_bnn_mae": 0.4687,
+    "test_mf_rmse": 0.7807,
+    "test_mf_mae": 0.4912,
+    "test_hybrid_rmse": 0.804,
+    "test_hybrid_mae": 0.577,
+    "bnn_beats_mf_rmse": true,
+    "bnn_beats_hybrid_rmse": true
+  },
+  "uncertainty": {
+    "mc_samples": 100,
+    "test_uncertainty_abs_error_corr": 0.4994,
+    "test_calibrated_interval_coverage": 0.9444,
+    "confidence_buckets": {
+      "high_confidence": 20,
+      "low_confidence": 16,
+      "medium_confidence": 14
+    }
+  },
+  "recommendations": {
+    "sample_users": 5,
+    "top_n_per_user": 10,
+    "final_recommendation_rows": 50,
+    "step6_dir": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step6_recommendations"
+  },
+  "key_artifacts": {
+    "results_log_csv": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/results_log.csv",
+    "results_log_md": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/results_log.md",
+    "model_features": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step4_features/model_features.csv",
+    "model_checkpoint": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step5_bnn/mc_dropout_bnn_model.pt",
+    "test_predictions": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step5_bnn/test_predictions_calibrated.csv",
+    "recommendations_with_explanations": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step6_recommendations/top10_recommendations_with_explanations.csv",
+    "sample_user_report": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step6_recommendations/sample_user_reports.md"
+  },
+  "known_limitation": "Step 6 recommendation candidate scoring uses a user/product mean MF proxy. A future version should export full all-candidate MF scores from the matrix completion model and use those instead of the proxy."
+}

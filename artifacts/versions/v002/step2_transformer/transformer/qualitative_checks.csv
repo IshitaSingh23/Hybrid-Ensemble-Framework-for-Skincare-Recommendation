@@ -1,0 +1,21 @@
+query_type,query_product_name,product_id,neighbor_product_id,rank,similarity,neighbor_product_name,neighbor_brand_name,neighbor_secondary_category,neighbor_tertiary_category
+moisturizer,GENIUS Sleeping Collagen Moisturizer,P439055,P453818,1,0.910524308681488,GENIUS Collagen Calming Relief,Algenist,Moisturizers,Moisturizers
+moisturizer,GENIUS Sleeping Collagen Moisturizer,P439055,P421277,2,0.8964861035346985,GENIUS Liquid Collagen Serum,Algenist,Treatments,Face Serums
+moisturizer,GENIUS Sleeping Collagen Moisturizer,P439055,P456990,3,0.8720456957817078,Mini GENIUS Liquid Collagen,Algenist,Mini Size,
+moisturizer,GENIUS Sleeping Collagen Moisturizer,P439055,P384537,4,0.8622472286224365,GENIUS Ultimate Anti-Aging Cream,Algenist,Moisturizers,Moisturizers
+moisturizer,GENIUS Sleeping Collagen Moisturizer,P439055,P443358,5,0.8599850535392761,Intensive Moisture Balance Moisturizer,Dermalogica,Moisturizers,Moisturizers
+acne,ALIVE Prebiotic Balancing Mask,P442859,P400207,1,0.8931004405021667,Blue Tansy BHA and Enzyme Pore Refining Mask,Herbivore,Masks,Face Masks
+acne,ALIVE Prebiotic Balancing Mask,P442859,P473148,2,0.8772363662719727,Mask-imum Revival Hydra-Plumping Mask,Naturally Serious,Masks,Face Masks
+acne,ALIVE Prebiotic Balancing Mask,P442859,P475196,3,0.8758009076118469,So Smooth Resurfacing & Brightening Fruit Enzyme Mask,TULA Skincare,Masks,Face Masks
+acne,ALIVE Prebiotic Balancing Mask,P442859,P440072,4,0.8650181889533997,Noni Glow Overnight Plumping Hydration Mask,KORA Organics,Masks,Face Masks
+acne,ALIVE Prebiotic Balancing Mask,P442859,P482755,5,0.8617916703224182,Claydate Detoxifying & Toning Face Mask Stick,TULA Skincare,Masks,Face Masks
+sunscreen_spf,SUBLIME DEFENSE Ultra Lightweight UV Defense Fluid SPF 50,P311143,P417118,1,0.8881296515464783,The Broad Spectrum SPF 50 UV Protecting Fluid,La Mer,Sunscreen,Face Sunscreen
+sunscreen_spf,SUBLIME DEFENSE Ultra Lightweight UV Defense Fluid SPF 50,P311143,P470057,2,0.8836780786514282,Mineral Sheerscreen Sunscreen SPF 30 PA+++,Supergoop!,Sunscreen,Face Sunscreen
+sunscreen_spf,SUBLIME DEFENSE Ultra Lightweight UV Defense Fluid SPF 50,P311143,P469524,3,0.8835444450378418,RESIST Super-Light Daily Wrinkle Defense SPF 30,Paula's Choice,Sunscreen,Face Sunscreen
+sunscreen_spf,SUBLIME DEFENSE Ultra Lightweight UV Defense Fluid SPF 50,P311143,P482322,4,0.8814611434936523,Mini Mineral Mattescreen Sunscreen SPF 40 PA+++,Supergoop!,Sunscreen,Face Sunscreen
+sunscreen_spf,SUBLIME DEFENSE Ultra Lightweight UV Defense Fluid SPF 50,P311143,P482321,5,0.8809047937393188,Mini Mineral Sheerscreen Sunscreen SPF 30 PA+++,Supergoop!,Sunscreen,Face Sunscreen
+sensitive_skin,Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,P398761,P474943,1,0.9761680364608765,Mini Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,Dr. Dennis Gross Skincare,Mini Size,
+sensitive_skin,Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,P398761,P269122,2,0.9403368830680847,Alpha Beta Extra Strength Daily Peel Pads,Dr. Dennis Gross Skincare,Treatments,Facial Peels
+sensitive_skin,Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,P398761,P377533,3,0.932177722454071,Alpha Beta Universal Daily Peel Pads,Dr. Dennis Gross Skincare,Treatments,Facial Peels
+sensitive_skin,Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,P398761,P481339,4,0.8871672749519348,Alpha Beta Daily Essentials - Extra Strength,Dr. Dennis Gross Skincare,Treatments,Facial Peels
+sensitive_skin,Alpha Beta Ultra Gentle Daily Peel Pads for Sensitive Skin,P398761,P278317,5,0.8818027973175049,Facial Radiance Pads,First Aid Beauty,Treatments,Facial Peels

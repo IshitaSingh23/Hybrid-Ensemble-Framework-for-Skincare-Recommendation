@@ -1,0 +1,8 @@
+{
+  "canonical_matrix_model": "ridge_ensemble",
+  "created_at": "2026-05-05T23:18:31",
+  "mf_score_semantics": "ridge_ensemble_matrix_completion_score",
+  "run_dir": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002",
+  "run_id": "v002",
+  "step1_matrix_ensemble_dir": "/Users/veerr_89/Work/projects/up-skin/artifacts/versions/v002/step1_matrix_ensemble"
+}

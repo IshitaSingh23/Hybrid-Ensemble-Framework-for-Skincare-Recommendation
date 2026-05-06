@@ -1,0 +1,10 @@
+{
+  "artifact_dir": "artifacts",
+  "canonical_matrix_model": "ridge_ensemble",
+  "data_dir": "Datasets",
+  "hybrid_alpha": 0.7,
+  "liked_rating_threshold": 4.0,
+  "mf_score_semantics": "ridge_ensemble_matrix_completion_score",
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+  "random_state": 42
+}

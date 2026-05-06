@@ -1,0 +1,44 @@
+{
+  "biased_mf": {
+    "evaluated_rows": 27822,
+    "mae": 0.49122524774066767,
+    "rmse": 0.7806867907341931
+  },
+  "canonical_matrix_model": "ridge_ensemble",
+  "item_knn": {
+    "evaluated_rows": 27822,
+    "mae": 0.46206804555734565,
+    "rmse": 0.8783857537877036
+  },
+  "legacy_biased_mf": {
+    "evaluated_rows": 27822,
+    "mae": 0.5357732823135166,
+    "rmse": 0.8293161376284509
+  },
+  "metadata_content": {
+    "evaluated_rows": 27822,
+    "mae": 0.5089675362109995,
+    "rmse": 0.8234079633551689
+  },
+  "mf_score_semantics": "ridge_ensemble_matrix_completion_score",
+  "ranking": {
+    "mf": {},
+    "note": "Ridge ranking is not recomputed here."
+  },
+  "ridge_ensemble": {
+    "evaluated_rows": 27822,
+    "mae": 0.49122524774066767,
+    "rmse": 0.7806867907341931
+  },
+  "run_id": "v002",
+  "split_report": {
+    "exported_prediction_rows": 55640,
+    "prediction_source_splits": {
+      "test": 27822,
+      "validation": 27818
+    },
+    "test_rows": 27822,
+    "train_rows": 121096,
+    "validation_rows": 27818
+  }
+}

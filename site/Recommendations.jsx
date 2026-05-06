@@ -91,7 +91,7 @@ function RecCard({ rec, idx, expanded, onToggle, usesMfProxy }) {
         {usesMfProxy ? (
           <span className="rec-mfproxy" title="Scoring uses a proxy ranker on this card">
             <Icon name="info" size={12}/>
-            <span>MF-proxy score · class-demo</span>
+            <span>matrix-proxy score · class-demo</span>
           </span>
         ) : null}
       </div>

@@ -66,6 +66,7 @@ class RecommendationService:
         self.bundle = model_bundle or load_model_bundle(self.project_root)
         self.artifact_dir = self.project_root / "artifacts"
         self.run_config = read_json(self.artifact_dir / "run_config.json")
+        self.matrix_metadata = self._load_matrix_metadata()
         self.hybrid_alpha = float(self.run_config.get("hybrid_alpha", 0.7))
         self.mc_samples = int(os.getenv("UPSKIN_MC_SAMPLES", self.bundle.model_config.get("mc_samples", 100)))
 
@@ -116,10 +117,33 @@ class RecommendationService:
         df["product_id"] = df["product_id"].astype(str)
         return df
 
+    def _load_matrix_metadata(self) -> dict:
+        """Return matrix-score metadata for the selected model run."""
+        step1_config_path = self.bundle.best_run.run_dir / "step1_matrix_ensemble" / "run_config.json"
+        if step1_config_path.exists():
+            metadata = read_json(step1_config_path)
+        else:
+            metadata = {}
+
+        feature_columns = set(self.bundle.feature_schema.get("feature_columns", []))
+        if not metadata.get("canonical_matrix_model"):
+            metadata["canonical_matrix_model"] = (
+                "ridge_ensemble" if "ridge_ensemble_score" in feature_columns else "matrix_factorization"
+            )
+        if not metadata.get("mf_score_semantics"):
+            metadata["mf_score_semantics"] = (
+                "ridge_ensemble_matrix_completion_score"
+                if metadata["canonical_matrix_model"] == "ridge_ensemble"
+                else "matrix_factorization_score"
+            )
+        return metadata
+
     def health(self) -> dict:
         return {
             "status": "ok",
             "run_id": self.bundle.best_run.run_id,
+            "canonical_matrix_model": self.matrix_metadata.get("canonical_matrix_model"),
+            "mf_score_semantics": self.matrix_metadata.get("mf_score_semantics"),
             "best_model_rmse": self.bundle.best_run.test_bnn_rmse,
             "model_type": self.bundle.model_config.get("model_type"),
             "product_count": int(len(self.product_catalog)),
@@ -134,6 +158,8 @@ class RecommendationService:
         uncertainty = summary.get("uncertainty", {})
         return {
             "run_id": self.bundle.best_run.run_id,
+            "canonical_matrix_model": self.matrix_metadata.get("canonical_matrix_model"),
+            "mf_score_semantics": self.matrix_metadata.get("mf_score_semantics"),
             "best_model": best_model,
             "uncertainty": uncertainty,
             "all_metrics": {
@@ -350,6 +376,31 @@ class RecommendationService:
         )
         df["hybrid_score"] = self.hybrid_alpha * df["mf_score"] + (1 - self.hybrid_alpha) * df["content_rating_score"]
         df["mf_content_gap"] = (df["mf_score"] - df["content_rating_score"]).abs()
+
+        df["baseline_score"] = np.clip(profile.mean_user_rating, 1, 5)
+        df["legacy_mf_score"] = df["mf_score"]
+        df["item_knn_score"] = df["mf_score"]
+        df["metadata_content_score"] = df["content_rating_score"]
+        df["ridge_ensemble_score"] = df["mf_score"]
+        df["gb_ensemble_score"] = df["mf_score"]
+        df["rf_ensemble_score"] = df["mf_score"]
+        df["product_rating_count"] = df["product_id"].map(self.product_rating_count).fillna(0).astype(int)
+        df["product_avg_rating"] = product_means
+
+        component_cols = [
+            "baseline_score",
+            "legacy_mf_score",
+            "item_knn_score",
+            "metadata_content_score",
+        ]
+        df["pred_mean"] = df[component_cols].mean(axis=1)
+        df["pred_std"] = df[component_cols].std(axis=1).fillna(0)
+        df["pred_min"] = df[component_cols].min(axis=1)
+        df["pred_max"] = df[component_cols].max(axis=1)
+        df["pred_range"] = df["pred_max"] - df["pred_min"]
+        df["component_score_mean"] = df["pred_mean"]
+        df["component_score_std"] = df["pred_std"]
+        df["component_score_range"] = df["pred_range"]
 
         df["user_rating_count"] = profile.user_rating_count
         df["mean_user_rating"] = profile.mean_user_rating

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -56,7 +57,12 @@ def resolve_project_root() -> Path:
 
 
 def resolve_best_run(project_root: Path | None = None) -> BestRun:
-    """Pick the saved model version with the lowest test BNN RMSE."""
+    """Pick the saved model run.
+
+    By default this selects the run with the lowest test BNN RMSE. Set
+    UPSKIN_MODEL_RUN_ID to force a specific saved run, which is useful for
+    deploying the latest pipeline even when an older run has a better RMSE.
+    """
     root = project_root or resolve_project_root()
     results_path = root / "artifacts" / "versions" / "results_log.csv"
     results = pd.read_csv(results_path)
@@ -67,12 +73,25 @@ def resolve_best_run(project_root: Path | None = None) -> BestRun:
         raise ValueError(f"Missing required columns in {results_path}: {sorted(missing)}")
 
     results["test_bnn_rmse"] = pd.to_numeric(results["test_bnn_rmse"], errors="coerce")
-    scored = results.dropna(subset=["test_bnn_rmse"]).sort_values("test_bnn_rmse")
-    if scored.empty:
-        raise ValueError(f"No usable test_bnn_rmse values found in {results_path}")
 
-    row = scored.iloc[0]
-    run_id = str(row["run_id"])
+    configured_run_id = os.getenv("UPSKIN_MODEL_RUN_ID", "").strip()
+    if configured_run_id:
+        matched = results[results["run_id"].astype(str) == configured_run_id]
+        if matched.empty:
+            available = sorted(results["run_id"].astype(str).unique())
+            raise ValueError(
+                f"UPSKIN_MODEL_RUN_ID={configured_run_id!r} was not found in "
+                f"{results_path}. Available runs: {available}"
+            )
+        row = matched.iloc[-1]
+        run_id = configured_run_id
+    else:
+        scored = results.dropna(subset=["test_bnn_rmse"]).sort_values("test_bnn_rmse")
+        if scored.empty:
+            raise ValueError(f"No usable test_bnn_rmse values found in {results_path}")
+
+        row = scored.iloc[0]
+        run_id = str(row["run_id"])
     run_dir = root / "artifacts" / "versions" / run_id
     summary_path = run_dir / "final_pipeline_summary.json"
     if not summary_path.exists():

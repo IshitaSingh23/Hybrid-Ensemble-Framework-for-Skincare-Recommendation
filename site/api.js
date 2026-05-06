@@ -12,6 +12,9 @@
 
   const RUNTIME_BASE =
     (typeof window !== "undefined" && window.__UPSKIN_API_URL) ||
+    (typeof window !== "undefined" &&
+      window.__UPSKIN_RUNTIME_CONFIG &&
+      window.__UPSKIN_RUNTIME_CONFIG.apiUrl) ||
     (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_UPSKIN_API_URL) ||
     queryApiBase() ||
     "http://localhost:8000";

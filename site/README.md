@@ -40,9 +40,18 @@ Then open <http://localhost:5173/>. The page calls `http://localhost:8000` by de
 The base URL is resolved in this order (first match wins):
 
 1. `window.__UPSKIN_API_URL` (set in `index.html` or a wrapper script at runtime).
-2. `process.env.NEXT_PUBLIC_UPSKIN_API_URL` if the site is bundled into a Next/Vite app.
-3. `?api=<url>` query string on the page (handy for staging).
-4. Default: `http://localhost:8000`.
+2. `window.__UPSKIN_RUNTIME_CONFIG.apiUrl` from `runtime-config.js`.
+3. `process.env.NEXT_PUBLIC_UPSKIN_API_URL` if the site is bundled into a Next/Vite app.
+4. `?api=<url>` query string on the page (handy for staging).
+5. Default: `http://localhost:8000`.
+
+For Render Static Sites, update `runtime-config.js` after the backend URL exists:
+
+```js
+window.__UPSKIN_RUNTIME_CONFIG = {
+  apiUrl: "https://<your-backend>.onrender.com"
+};
+```
 
 ### Offline design-preview mode
 
@@ -113,6 +122,8 @@ The frontend calls only the documented endpoints. All shapes are described in
 - Configure the backend with `UPSKIN_CORS_ORIGINS` so the hosted frontend can
   call it, for example:
   `UPSKIN_CORS_ORIGINS="https://your-frontend.vercel.app"`.
+- To deploy the latest Ridge-backed run, set `UPSKIN_MODEL_RUN_ID=v002` on the
+  backend. Without this, the API selects the saved run with the lowest BNN RMSE.
 - The backend is a Dockerized FastAPI service (Render / Railway recommended in
   `docs/backend_api_contract.md`). Don't put the model on Vercel serverless.
 - Don't ship `mockData.js` / `mockExtras.js` to a production host if you want to

@@ -43,6 +43,9 @@ function ModelTransparency({ open, onClose }) {
 
   const best = data && data.best_model ? data.best_model : null;
   const unc = data && data.uncertainty ? data.uncertainty : null;
+  const matrixLabel = data && data.canonical_matrix_model === "ridge_ensemble"
+    ? "Ridge matrix"
+    : "Matrix";
   const staleNotes = (data && data.stale_notes && data.stale_notes.length)
     ? data.stale_notes
     : FALLBACK_STALE_NOTES;
@@ -86,11 +89,11 @@ function ModelTransparency({ open, onClose }) {
                 <Eyebrow>Best model · {best.model_type}</Eyebrow>
                 <MetricRow label="BNN RMSE" value={fmtNumber(best.test_bnn_rmse, 4)} hint="lower is better" emphasis/>
                 <MetricRow label="BNN MAE" value={fmtNumber(best.test_bnn_mae, 4)}/>
-                <MetricRow label="MF RMSE" value={fmtNumber(best.test_mf_rmse, 4)}/>
+                <MetricRow label={matrixLabel + " RMSE"} value={fmtNumber(best.test_mf_rmse, 4)}/>
                 <MetricRow label="Hybrid RMSE" value={fmtNumber(best.test_hybrid_rmse, 4)}/>
                 {best.bnn_beats_mf_rmse !== undefined && best.bnn_beats_hybrid_rmse !== undefined ? (
                   <p className="metric-blurb">
-                    {best.bnn_beats_mf_rmse ? "BNN beats MF" : "MF beats BNN"} {" · "}
+                    {best.bnn_beats_mf_rmse ? "BNN beats " + matrixLabel : matrixLabel + " beats BNN"} {" · "}
                     {best.bnn_beats_hybrid_rmse ? "BNN beats hybrid" : "Hybrid beats BNN"} on test RMSE.
                   </p>
                 ) : null}

@@ -82,3 +82,21 @@ def test_no_already_seen_products_for_demo_user() -> None:
     payload = service.recommend_for_demo_user(author_id=author_id, top_n=10)
     returned_ids = {item["product_id"] for item in payload["recommendations"]}
     assert not returned_ids.intersection(seen)
+
+
+def test_can_force_latest_ridge_run(monkeypatch) -> None:
+    get_service.cache_clear()
+    monkeypatch.setenv("UPSKIN_MODEL_RUN_ID", "v002")
+    try:
+        service = get_service()
+        health = service.health()
+        assert health["run_id"] == "v002"
+        assert health["canonical_matrix_model"] == "ridge_ensemble"
+        assert health["mf_score_semantics"] == "ridge_ensemble_matrix_completion_score"
+
+        demo_user = service.demo_users(limit=1)[0]
+        payload = service.recommend_for_demo_user(author_id=demo_user["author_id"], top_n=3)
+        assert payload["run_id"] == "v002"
+        assert len(payload["recommendations"]) == 3
+    finally:
+        get_service.cache_clear()

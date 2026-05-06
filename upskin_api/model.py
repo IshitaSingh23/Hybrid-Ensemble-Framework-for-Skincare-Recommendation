@@ -56,7 +56,10 @@ class ModelBundle:
         return str(
             self.best_run.summary.get(
                 "mf_proxy_note",
-                "Full candidate-level MF scores were not exported; the API uses a user/product mean proxy.",
+                self.best_run.summary.get(
+                    "known_limitation",
+                    "Full candidate-level MF scores were not exported; the API uses a user/product mean proxy.",
+                ),
             )
         )
 

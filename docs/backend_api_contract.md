@@ -2,6 +2,10 @@
 
 This backend is a model-backed handoff API for the recommendation frontend. It does not serve precomputed recommendation rows as the source of truth. It resolves the best saved model run from `artifacts/versions/results_log.csv`, loads that run's model bundle, builds candidate features, and runs MC-dropout inference.
 
+By default the backend loads the saved run with the lowest `test_bnn_rmse`.
+Set `UPSKIN_MODEL_RUN_ID` to force a specific version, for example `v002` for
+the Ridge-backed latest pipeline.
+
 ## Local Run
 
 ```bash
@@ -22,6 +26,14 @@ For faster local tests, lower MC samples:
 
 ```bash
 UPSKIN_MC_SAMPLES=3 pytest tests/test_upskin_api.py
+```
+
+To run the latest Ridge-backed model locally:
+
+```bash
+UPSKIN_MODEL_RUN_ID=v002 \
+UPSKIN_MC_SAMPLES=25 \
+uvicorn upskin_api.main:app --host 0.0.0.0 --port 8000
 ```
 
 ## Required Artifacts
@@ -49,6 +61,8 @@ Catalog and profile data:
 ### `GET /health`
 
 Returns API/model status, resolved best run, product count, demo user count, and prototype flags.
+Also returns `canonical_matrix_model` and `mf_score_semantics` so clients can
+label the matrix signal correctly.
 
 ### `GET /model/metrics`
 
@@ -124,15 +138,25 @@ python -m http.server 5173 --directory site
 ```
 
 Open <http://localhost:5173/>. The page resolves the API base URL from
-`window.__UPSKIN_API_URL` (or `NEXT_PUBLIC_UPSKIN_API_URL` when bundled), and
+`window.__UPSKIN_API_URL`, `window.__UPSKIN_RUNTIME_CONFIG.apiUrl` in
+`site/runtime-config.js`, or `NEXT_PUBLIC_UPSKIN_API_URL` when bundled, and
 defaults to `http://localhost:8000`. Pass `?api=<url>` on the page URL to
 override at runtime, or `?mock=1` to use the offline design preview layer
 instead of the live backend. Full setup notes live in `site/README.md`.
 
 ## Hosting
 
-Host the backend/model as a Dockerized FastAPI service on Render or Railway. Host the frontend on Vercel and point it at the backend URL.
+Host the backend/model as a Dockerized FastAPI service on Render or Railway. Host the frontend on Render Static Sites, Vercel, or another static host and point it at the backend URL.
 
 Do not use Vercel serverless for the PyTorch model service unless the model bundle is substantially simplified. The Python runtime exists, but this project is a better fit for a normal Docker web service because it needs PyTorch, sklearn/joblib artifacts, pandas, and CSV/NPZ artifact loading.
 
 Deployment note: `artifacts/` is ignored by git in this repo. For deployment, either attach the artifacts at build/runtime, use a persistent disk, or intentionally publish the required model bundle to the deployment target. The API will fail fast if required artifacts are missing.
+
+Render backend environment variables for the latest model:
+
+```text
+UPSKIN_PROJECT_ROOT=/app
+UPSKIN_MODEL_RUN_ID=v002
+UPSKIN_CORS_ORIGINS=https://<your-frontend>.onrender.com
+UPSKIN_MC_SAMPLES=25
+```

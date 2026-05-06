@@ -18,7 +18,7 @@ uvicorn upskin_api.main:app --reload --host 0.0.0.0 --port 8000
 If the frontend is hosted on a different origin, set CORS explicitly:
 
 ```bash
-UPSKIN_CORS_ORIGINS="http://localhost:5173,https://your-frontend.vercel.app" \
+UPSKIN_CORS_ORIGINS="http://localhost:5173,https://up-skin.vercel.app" \
 uvicorn upskin_api.main:app --host 0.0.0.0 --port 8000
 ```
 
@@ -157,6 +157,6 @@ Render backend environment variables for the latest model:
 ```text
 UPSKIN_PROJECT_ROOT=/app
 UPSKIN_MODEL_RUN_ID=v002
-UPSKIN_CORS_ORIGINS=https://<your-frontend>.onrender.com
+UPSKIN_CORS_ORIGINS=https://up-skin.vercel.app
 UPSKIN_MC_SAMPLES=25
 ```

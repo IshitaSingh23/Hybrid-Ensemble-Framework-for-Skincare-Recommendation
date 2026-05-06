@@ -120,8 +120,8 @@ The frontend calls only the documented endpoints. All shapes are described in
   framework-free static HTML, point a wrapper script that sets
   `window.__UPSKIN_API_URL = "https://<your-api-host>"` before `api.js` loads.
 - Configure the backend with `UPSKIN_CORS_ORIGINS` so the hosted frontend can
-  call it, for example:
-  `UPSKIN_CORS_ORIGINS="https://your-frontend.vercel.app"`.
+  call it:
+  `UPSKIN_CORS_ORIGINS="https://up-skin.vercel.app"`.
 - To deploy the latest Ridge-backed run, set `UPSKIN_MODEL_RUN_ID=v002` on the
   backend. Without this, the API selects the saved run with the lowest BNN RMSE.
 - The backend is a Dockerized FastAPI service (Render / Railway recommended in

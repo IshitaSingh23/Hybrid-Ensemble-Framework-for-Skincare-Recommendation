@@ -15,7 +15,14 @@ app = FastAPI(
     description="Model-backed handoff API for uncertainty-aware skincare recommendations.",
 )
 
-default_origins = "http://localhost:5173,http://127.0.0.1:5173"
+default_origins = ",".join(
+    [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://up-skin.onrender.com",
+        "https://up-skin.vercel.app",
+    ]
+)
 cors_origins = [
     origin.strip()
     for origin in os.getenv("UPSKIN_CORS_ORIGINS", default_origins).split(",")

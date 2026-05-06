@@ -5,6 +5,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV UPSKIN_PROJECT_ROOT=/app
+ENV PORT=8000
 
 COPY requirements-api.txt /app/requirements-api.txt
 RUN pip install --no-cache-dir --upgrade pip \
@@ -17,5 +18,4 @@ COPY artifacts /app/artifacts
 
 EXPOSE 8000
 
-CMD ["uvicorn", "upskin_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
+CMD ["sh", "-c", "uvicorn upskin_api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

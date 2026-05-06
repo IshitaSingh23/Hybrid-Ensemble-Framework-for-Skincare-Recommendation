@@ -49,7 +49,7 @@ For Render Static Sites, update `runtime-config.js` after the backend URL exists
 
 ```js
 window.__UPSKIN_RUNTIME_CONFIG = {
-  apiUrl: "https://<your-backend>.onrender.com"
+  apiUrl: "https://upskin-api.onrender.com"
 };
 ```
 
@@ -116,9 +116,8 @@ The frontend calls only the documented endpoints. All shapes are described in
 ## Deployment notes
 
 - Host this directory as static files on Vercel (or any static host). Set
-  `NEXT_PUBLIC_UPSKIN_API_URL` to the deployed FastAPI URL — or, since this is
-  framework-free static HTML, point a wrapper script that sets
-  `window.__UPSKIN_API_URL = "https://<your-api-host>"` before `api.js` loads.
+  `UPSKIN_API_URL=https://upskin-api.onrender.com` in the Vercel project so
+  the build writes the deployed FastAPI URL into `runtime-config.js`.
 - Configure the backend with `UPSKIN_CORS_ORIGINS` so the hosted frontend can
   call it:
   `UPSKIN_CORS_ORIGINS="https://up-skin.vercel.app"`.

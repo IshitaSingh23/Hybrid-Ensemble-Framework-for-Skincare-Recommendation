@@ -148,6 +148,10 @@ instead of the live backend. Full setup notes live in `site/README.md`.
 
 Host the backend/model as a Dockerized FastAPI service on Render or Railway. Host the frontend on Render Static Sites, Vercel, or another static host and point it at the backend URL.
 
+Current deployment URLs:
+- Frontend: <https://up-skin.vercel.app>
+- Backend API: <https://upskin-api.onrender.com>
+
 Do not use Vercel serverless for the PyTorch model service unless the model bundle is substantially simplified. The Python runtime exists, but this project is a better fit for a normal Docker web service because it needs PyTorch, sklearn/joblib artifacts, pandas, and CSV/NPZ artifact loading.
 
 Deployment note: `artifacts/` is ignored by git in this repo. For deployment, either attach the artifacts at build/runtime, use a persistent disk, or intentionally publish the required model bundle to the deployment target. The API will fail fast if required artifacts are missing.
@@ -159,4 +163,10 @@ UPSKIN_PROJECT_ROOT=/app
 UPSKIN_MODEL_RUN_ID=v002
 UPSKIN_CORS_ORIGINS=https://up-skin.vercel.app
 UPSKIN_MC_SAMPLES=25
+```
+
+Vercel frontend environment variable:
+
+```text
+UPSKIN_API_URL=https://upskin-api.onrender.com
 ```

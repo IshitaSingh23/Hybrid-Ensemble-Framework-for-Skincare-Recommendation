@@ -1,23 +1,49 @@
 // Up Skin API client — single source of truth for backend calls.
 // Base URL pattern matches the handoff brief (NEXT_PUBLIC_UPSKIN_API_URL).
 // In a Next/Vite app this would read from import.meta.env or process.env;
-// here it falls back through a runtime override + localhost.
+// here it falls back through a runtime override, a production host default,
+// and localhost for local/file development.
 
 (function () {
+  const PRODUCTION_API_BASE = "https://upskin-api.onrender.com";
+  const LOCAL_API_BASE = "http://localhost:8000";
+
   function queryApiBase() {
     if (typeof window === "undefined") return "";
     const params = new URLSearchParams(window.location.search);
     return params.get("api") || "";
   }
 
-  const RUNTIME_BASE =
+  function isLocalPage() {
+    if (typeof window === "undefined" || !window.location) return true;
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    return (
+      protocol === "file:" ||
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "::1" ||
+      hostname === ""
+    );
+  }
+
+  function defaultApiBase() {
+    return isLocalPage() ? LOCAL_API_BASE : PRODUCTION_API_BASE;
+  }
+
+  function normalizeBase(base) {
+    return String(base || "").replace(/\/+$/, "");
+  }
+
+  const RUNTIME_BASE = normalizeBase(
     (typeof window !== "undefined" && window.__UPSKIN_API_URL) ||
     (typeof window !== "undefined" &&
       window.__UPSKIN_RUNTIME_CONFIG &&
       window.__UPSKIN_RUNTIME_CONFIG.apiUrl) ||
     (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_UPSKIN_API_URL) ||
     queryApiBase() ||
-    "http://localhost:8000";
+    defaultApiBase()
+  );
 
   // Real FastAPI mode is the default. Opt into the offline mock layer by
   // setting `window.__UPSKIN_USE_MOCK = true` *before* this script loads

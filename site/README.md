@@ -43,9 +43,10 @@ The base URL is resolved in this order (first match wins):
 2. `window.__UPSKIN_RUNTIME_CONFIG.apiUrl` from `runtime-config.js`.
 3. `process.env.NEXT_PUBLIC_UPSKIN_API_URL` if the site is bundled into a Next/Vite app.
 4. `?api=<url>` query string on the page (handy for staging).
-5. Default: `http://localhost:8000`.
+5. Default: `http://localhost:8000` for local/file pages, or
+   `https://upskin-api.onrender.com` for hosted pages.
 
-For Render Static Sites, update `runtime-config.js` after the backend URL exists:
+For static hosts, keep `runtime-config.js` at the hosted root:
 
 ```js
 window.__UPSKIN_RUNTIME_CONFIG = {
@@ -115,14 +116,14 @@ The frontend calls only the documented endpoints. All shapes are described in
 
 ## Deployment notes
 
-- Host this directory as static files on Vercel (or any static host). Set
-  `UPSKIN_API_URL=https://upskin-api.onrender.com` in the Vercel project so
-  the build writes the deployed FastAPI URL into `runtime-config.js`.
+- Vercel deployments from the repository root use `../vercel.json`, which serves
+  `site/` as the static output directory. If you set the Vercel Project Root
+  manually, point it at `site/`.
 - Configure the backend with `UPSKIN_CORS_ORIGINS` so the hosted frontend can
   call it:
-  `UPSKIN_CORS_ORIGINS="https://up-skin.vercel.app"`.
+  `UPSKIN_CORS_ORIGINS="https://up-skin.vercel.app,https://up-skin.onrender.com"`.
 - To deploy the latest Ridge-backed run, set `UPSKIN_MODEL_RUN_ID=v002` on the
-  backend. Without this, the API selects the saved run with the lowest BNN RMSE.
+  backend. The Docker image sets this default for the demo deployment.
 - The backend is a Dockerized FastAPI service (Render / Railway recommended in
   `docs/backend_api_contract.md`). Don't put the model on Vercel serverless.
 - Don't ship `mockData.js` / `mockExtras.js` to a production host if you want to

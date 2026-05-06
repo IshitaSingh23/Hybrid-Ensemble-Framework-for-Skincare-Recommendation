@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV UPSKIN_PROJECT_ROOT=/app
+ENV UPSKIN_MODEL_RUN_ID=v002
+ENV UPSKIN_CORS_ORIGINS=https://up-skin.vercel.app,https://up-skin.onrender.com
 ENV PORT=8000
 
 COPY requirements-api.txt /app/requirements-api.txt

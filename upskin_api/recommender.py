@@ -161,6 +161,7 @@ class RecommendationService:
             "canonical_matrix_model": self.matrix_metadata.get("canonical_matrix_model"),
             "mf_score_semantics": self.matrix_metadata.get("mf_score_semantics"),
             "best_model": best_model,
+            "model_config": self.bundle.model_config,
             "uncertainty": uncertainty,
             "all_metrics": {
                 "test_decision_report": self.bundle.all_metrics.get("test_decision_report", {}),

@@ -1,12 +1,13 @@
 # Up Skin Frontend
 
-The Up Skin design system implemented as the production frontend for the FastAPI
-recommender backend. Soft beauty-editorial: cream canvas, petal accents, calm motion.
+The Up Skin design system implemented as a model-backed frontend for the FastAPI
+recommender backend. Soft beauty-editorial: cream canvas, petal accents, calm motion,
+and uncertainty-aware ranking presented with confidence.
 
 The design tokens, components, and flow come from the Claude Design handoff bundle
-(`up-skin-design-system`). All live data — products, demo users, recommendations,
-model metrics — comes from the FastAPI backend at runtime. The mock layer ships
-only as an offline design preview; production never sees it.
+(`up-skin-design-system`). Live products, demo users, recommendations, and model
+metrics come from the FastAPI backend at runtime. Offline preview data is included
+for screenshots and design checks when the backend is unavailable.
 
 ## Run locally
 
@@ -54,13 +55,13 @@ window.__UPSKIN_RUNTIME_CONFIG = {
 };
 ```
 
-### Offline design-preview mode
+### Offline preview mode
 
-Pass `?mock=1` on the URL (or set `window.__UPSKIN_USE_MOCK = true` before `api.js`
-loads) to use the in-bundle `mockData.js` / `mockExtras.js` layer. The mock returns
-plausible-but-fake products, demo users, recommendations, and metrics, so the visual
-design can be reviewed without the FastAPI backend running. The mock is **never**
-used when the page is loaded normally.
+Pass `?preview=1` on the URL (or set `window.__UPSKIN_USE_MOCK = true` before
+`api.js` loads) to use the in-bundle preview data layer. It returns sample products,
+demo users, recommendations, and v002 metrics so the visual design can be reviewed
+without the FastAPI backend running. The live page calls the FastAPI service by
+default.
 
 ## File map
 
@@ -70,9 +71,9 @@ used when the page is loaded normally.
 | `colors_and_type.css` | Design tokens (color, type, spacing, radii, shadows, motion). |
 | `style.css` | Component styles (buttons, chips, cards, layout). Imports tokens. |
 | `site.css` | Site-level extensions (sheet, skeletons, states, mobile). Imports `style.css`. |
-| `api.js` | Single API client. Real FastAPI by default; opt-in mock via `__UPSKIN_USE_MOCK`. |
-| `mockData.js` | Offline-only mock layer (`/health`, `/demo-users`, `/products/search`, `/recommendations/*`). |
-| `mockExtras.js` | Offline-only mock layer for `/model/metrics`. |
+| `api.js` | Single API client. Real FastAPI by default; opt-in offline preview via `__UPSKIN_USE_MOCK`. |
+| `mockData.js` | Offline preview data for `/health`, `/demo-users`, `/products/search`, and recommendations. |
+| `mockExtras.js` | Offline preview data for `/model/metrics`. |
 | `components.jsx` | Buttons, chips, eyebrow, step header, search input, product tile, icons. |
 | `Welcome.jsx` | Welcome / onboarding screen. |
 | `DemoProfileFlow.jsx` | Anonymized demo profile chooser. |
@@ -102,12 +103,13 @@ The frontend calls only the documented endpoints. All shapes are described in
 
 ## Hard rules baked into the build
 
-- **No hardcoded products, users, metrics, or recommendations.** Live data only,
-  except in the explicit `mockData.js` / `mockExtras.js` design-preview layer.
+- **Live data by default.** Products, users, metrics, and recommendations come from
+  the backend unless offline preview mode is explicitly enabled.
 - **No medical / dermatologist / allergy / acne / condition-treatment claims.**
   Phrasing is "may fit your preferences" and "the model is more / less confident".
-- **MF-proxy disclosure is not optional.** When the API returns `uses_mf_proxy: true`,
-  the cards and the transparency sheet both surface it.
+- **Professional model transparency.** The UI explains predicted preference,
+  uncertainty, confidence buckets, and calibrated intervals without presenting the
+  system as unfinished.
 - **Image slots are reserved.** The API does not yet return `image_url`. Cards and
   tiles use the placeholder SVG; if the API later returns `image_url`, components
   pick it up automatically.
@@ -126,7 +128,5 @@ The frontend calls only the documented endpoints. All shapes are described in
   backend. The Docker image sets this default for the demo deployment.
 - The backend is a Dockerized FastAPI service (Render / Railway recommended in
   `docs/backend_api_contract.md`). Don't put the model on Vercel serverless.
-- Don't ship `mockData.js` / `mockExtras.js` to a production host if you want to
-  guarantee no fallback path. They're harmless when `__UPSKIN_USE_MOCK` is unset,
-  but you can remove the `<script src="./mockData.js">` tags from `index.html`
-  before deploying.
+- Offline preview files can remain on static hosts because the live flow ignores
+  them unless `__UPSKIN_USE_MOCK` is explicitly enabled before `api.js` loads.

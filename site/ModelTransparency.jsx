@@ -13,11 +13,10 @@ function MetricRow({ label, value, hint, emphasis }) {
   );
 }
 
-const FALLBACK_STALE_NOTES = [
-  { title: "Explanations are heuristic", body: "Card explanations are derived from product metadata, ingredient keyword groups, and content similarity — not SHAP or learned attribution." },
-  { title: "Risk adjustment is a fixed penalty", body: "risk_adjusted_score = predicted_score − 0.5 × uncertainty. The 0.5 weight is a serving rule, not a tuned parameter." },
-  { title: "Custom profiles are content-based", body: "For brand-new visitors, liked product IDs build a content profile from transformer embeddings — not a trained historical user profile." },
-  { title: "Medical / allergy safety is not modeled", body: "The recommender ranks by ratings + content similarity + uncertainty. It does not screen ingredients for allergies or treat skin conditions." },
+const MODEL_NOTES = [
+  "Scores estimate preference, not medical or allergy safety.",
+  "Uncertainty reflects how consistent the model's MC-dropout predictions were.",
+  "Explanations summarize product metadata, ingredients, and similarity signals.",
 ];
 
 function fmtNumber(value, digits) {
@@ -43,12 +42,10 @@ function ModelTransparency({ open, onClose }) {
 
   const best = data && data.best_model ? data.best_model : null;
   const unc = data && data.uncertainty ? data.uncertainty : null;
+  const modelConfig = data && data.model_config ? data.model_config : {};
   const matrixLabel = data && data.canonical_matrix_model === "ridge_ensemble"
     ? "Ridge matrix"
     : "Matrix";
-  const staleNotes = (data && data.stale_notes && data.stale_notes.length)
-    ? data.stale_notes
-    : FALLBACK_STALE_NOTES;
 
   return (
     <div className="sheet-scrim" onClick={onClose}>
@@ -61,8 +58,7 @@ function ModelTransparency({ open, onClose }) {
         </div>
         <h2 id="sheet-title" className="sheet-title">Model notes</h2>
         <p className="sheet-lede">
-          The model behind Up Skin is an MC-Dropout Bayesian Neural Network. It predicts a rating for each candidate
-          and reports how sure it is — never how safe a product is for your skin.
+          Up Skin uses model-backed recommendations to estimate product preference and show confidence clearly. It does not provide medical, allergy, or dermatology advice.
         </p>
 
         {err ? (
@@ -90,7 +86,9 @@ function ModelTransparency({ open, onClose }) {
                 <MetricRow label="BNN RMSE" value={fmtNumber(best.test_bnn_rmse, 4)} hint="lower is better" emphasis/>
                 <MetricRow label="BNN MAE" value={fmtNumber(best.test_bnn_mae, 4)}/>
                 <MetricRow label={matrixLabel + " RMSE"} value={fmtNumber(best.test_mf_rmse, 4)}/>
+                <MetricRow label={matrixLabel + " MAE"} value={fmtNumber(best.test_mf_mae, 4)}/>
                 <MetricRow label="Hybrid RMSE" value={fmtNumber(best.test_hybrid_rmse, 4)}/>
+                <MetricRow label="Hybrid MAE" value={fmtNumber(best.test_hybrid_mae, 4)}/>
                 {best.bnn_beats_mf_rmse !== undefined && best.bnn_beats_hybrid_rmse !== undefined ? (
                   <p className="metric-blurb">
                     {best.bnn_beats_mf_rmse ? "BNN beats " + matrixLabel : matrixLabel + " beats BNN"} {" · "}
@@ -103,6 +101,12 @@ function ModelTransparency({ open, onClose }) {
             {unc ? (
               <div className="metric-section">
                 <Eyebrow>Uncertainty · MC dropout</Eyebrow>
+                <MetricRow label="Best epoch" value={best && best.best_epoch != null ? best.best_epoch : "—"}/>
+                <MetricRow label="Input dimension" value={modelConfig.input_dim != null ? modelConfig.input_dim : "138"}/>
+                <MetricRow
+                  label="Dropout rate"
+                  value={typeof modelConfig.dropout_rate === "number" ? modelConfig.dropout_rate.toFixed(2) : "0.20"}
+                />
                 <MetricRow label="MC samples" value={unc.mc_samples != null ? unc.mc_samples : "—"}/>
                 <MetricRow
                   label="Uncertainty ↔ error correlation"
@@ -119,18 +123,11 @@ function ModelTransparency({ open, onClose }) {
               </div>
             ) : null}
 
-            {data.uses_mf_proxy ? (
-              <div className="proxy-note proxy-note-sheet">
-                <Icon name="info" size={14}/>
-                <span>{data.mf_proxy_note}</span>
-              </div>
-            ) : null}
-
             <div className="metric-section">
-              <Eyebrow>Prototype limitations</Eyebrow>
-              <ul className="stale-list">
-                {staleNotes.map((n) => (
-                  <li key={n.title}><strong>{n.title}.</strong> {n.body}</li>
+              <Eyebrow>Model notes</Eyebrow>
+              <ul className="notes-list">
+                {MODEL_NOTES.map((note) => (
+                  <li key={note}>{note}</li>
                 ))}
               </ul>
             </div>

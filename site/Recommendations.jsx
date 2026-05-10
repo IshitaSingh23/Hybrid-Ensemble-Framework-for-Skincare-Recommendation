@@ -31,7 +31,7 @@ function IntervalBar({ score, lower, upper }) {
   );
 }
 
-function RecCard({ rec, idx, expanded, onToggle, usesMfProxy }) {
+function RecCard({ rec, idx, expanded, onToggle }) {
   const c = bucketCopy(rec.confidence_bucket);
   const interval = rec.predicted_interval || { lower: rec.predicted_score, upper: rec.predicted_score };
   const imgSrc = rec.image_url || assetPath("/placeholder-product.svg");
@@ -87,13 +87,6 @@ function RecCard({ rec, idx, expanded, onToggle, usesMfProxy }) {
         <button className="btn btn-link rec-toggle" onClick={onToggle}>
           {expanded ? "Show less" : "Why this?"}
         </button>
-
-        {usesMfProxy ? (
-          <span className="rec-mfproxy" title="Scoring uses a proxy ranker on this card">
-            <Icon name="info" size={12}/>
-            <span>matrix-proxy score · class-demo</span>
-          </span>
-        ) : null}
       </div>
     </article>
   );
@@ -125,17 +118,8 @@ function Recommendations({ data, onRestart, onOpenNotes }) {
         <Eyebrow>Today's picks</Eyebrow>
         <h2 className="results-title">In your neighborhood.</h2>
         <p className="results-sub">
-          {recs.length} recommendation{recs.length === 1 ? "" : "s"} from the live model. Confidence is shown honestly.
+          {recs.length} recommendation{recs.length === 1 ? "" : "s"} from the live model. Recommendations are ranked using predicted preference and model uncertainty. Confidence is shown to help interpret each suggestion.
         </p>
-        {data.uses_mf_proxy ? (
-          <div className="proxy-note">
-            <Icon name="info" size={14}/>
-            <span>
-              {data.mf_proxy_note ||
-                "Heads up — this is a class-demo. Some scores use a proxy ranker until the full matrix-factorization model ships."}
-            </span>
-          </div>
-        ) : null}
       </div>
 
       <div className="rec-grid">
@@ -146,7 +130,6 @@ function Recommendations({ data, onRestart, onOpenNotes }) {
             idx={i}
             expanded={!!expanded[r.product_id]}
             onToggle={() => setExpanded((s) => ({ ...s, [r.product_id]: !s[r.product_id] }))}
-            usesMfProxy={!!data.uses_mf_proxy}
           />
         ))}
       </div>

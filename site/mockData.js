@@ -1,6 +1,6 @@
-// MOCK-ONLY data so the prototype runs as a static HTML file when no backend is available.
-// In production, every call goes through the FastAPI backend (see api.js).
-// Enable by setting `window.__UPSKIN_USE_MOCK = true` in index.html *before* loading api.js.
+// Offline preview data so the static site can be reviewed without a backend.
+// In the live experience, every call goes through the FastAPI backend (see api.js).
+// Enable by setting `window.__UPSKIN_USE_MOCK = true` in index.html before loading api.js.
 
 const PRODUCTS = [
   { product_id: "P503879", product_name: "Wake Up Honey Eye Cream with Brightening Vitamin C", brand_name: "Farmacy", category: "Eye Care / Eye Creams & Treatments", price_usd: 48, avg_product_rating: 4.51, loves_count: 312044 },
@@ -25,13 +25,11 @@ const DEMO_USERS = [
 
 const HEALTH = {
   status: "ok",
-  run_id: "v001",
-  best_model_rmse: 0.7636,
+  run_id: "v002",
+  best_model_rmse: 0.7793,
   model_type: "MC Dropout Bayesian Neural Network",
   product_count: PRODUCTS.length,
   demo_user_count: DEMO_USERS.length,
-  uses_mf_proxy: true,
-  mf_proxy_note: "Recommendation scoring uses a user/product mean MF proxy. The BNN ratings + uncertainty are real for the saved evaluation task; full MF candidate scorer not yet exported.",
 };
 
 const EXPLAIN = [
@@ -86,8 +84,6 @@ window.mockApi = {
     return {
       run_id: HEALTH.run_id,
       best_model_rmse: HEALTH.best_model_rmse,
-      uses_mf_proxy: HEALTH.uses_mf_proxy,
-      mf_proxy_note: HEALTH.mf_proxy_note,
       recommendations: buildRecs(seed, top_n),
     };
   },
@@ -110,8 +106,6 @@ window.mockApi = {
     return {
       run_id: HEALTH.run_id,
       best_model_rmse: HEALTH.best_model_rmse,
-      uses_mf_proxy: HEALTH.uses_mf_proxy,
-      mf_proxy_note: HEALTH.mf_proxy_note,
       recommendations: recs,
     };
   },

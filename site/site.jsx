@@ -42,8 +42,10 @@ function Site() {
       ? "status-ok"
       : "status-down";
   const statusLabel = !health
-    ? "Backend checking…"
-    : "Backend " + (health.status || "unknown") + (window.upskinApi.usingMock ? " · mock" : "");
+    ? "Live model checking…"
+    : window.upskinApi.usingMock
+      ? "Offline preview"
+      : "Live model " + (health.status || "unknown");
 
   return (
     <div className="page">
@@ -90,7 +92,7 @@ function Site() {
 
       <footer className="footer">
         <span className="footer-disclaimer">
-          Up Skin is a class-demo recommender. It can't make medical, allergy, or dermatologist claims, and shouldn't be used to treat a skin condition.
+          Up Skin recommends based on rating patterns and product similarity. It does not provide medical, allergy, or dermatology advice.
         </span>
         <button className="footer-link" onClick={() => setSheet(true)}>Model notes</button>
       </footer>

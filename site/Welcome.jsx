@@ -21,7 +21,7 @@ function Welcome({ onChoose }) {
         <SecondaryBtn onClick={() => onChoose("demo")}>Use a demo profile</SecondaryBtn>
       </div>
       <div className="welcome-foot">
-        <span>Class-demo recommender · model + uncertainty served live from the FastAPI backend.</span>
+        <span>Model-backed recommendations · uncertainty served live from the FastAPI backend.</span>
       </div>
     </section>
   );

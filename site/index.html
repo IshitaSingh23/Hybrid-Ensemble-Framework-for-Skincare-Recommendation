@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Up Skin · Skincare you'll likely love</title>
-  <meta name="description" content="A class-demo skincare recommender. Discover products you'll likely love — with the model's confidence shown honestly."/>
+  <meta name="description" content="Model-backed skincare recommendations with uncertainty-aware ranking and confidence shown honestly."/>
   <link rel="icon" type="image/svg+xml" href="./assets/motifs/petal.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -30,19 +30,19 @@
       if (override && !window.__UPSKIN_API_URL) {
         window.__UPSKIN_API_URL = override;
       }
-      // Opt into the offline mock layer with `?mock=1` for design preview.
-      if (qs.get("mock") === "1") {
+      // Opt into the offline preview layer for design review without a backend.
+      if (qs.get("preview") === "1" || qs.get("mock") === "1") {
         window.__UPSKIN_USE_MOCK = true;
       }
     })();
   </script>
 
-  <!-- React (UMD) and Babel (browser JSX compiler) for the prototype runtime. -->
+  <!-- React (UMD) and Babel (browser JSX compiler) for the static site runtime. -->
   <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
 
-  <!-- Offline mock layer (loaded so design preview works with ?mock=1; harmless otherwise). -->
+  <!-- Offline preview layer (used only when the preview query flag is enabled). -->
   <script src="./mockData.js"></script>
   <script src="./mockExtras.js"></script>
 

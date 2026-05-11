@@ -79,6 +79,7 @@ function BuildProfileFlow({ onBack, onSubmit }) {
             sub="Tell us 3–8 products you've genuinely liked. We'll find more in their neighborhood."
           />
           <SearchInput value={query} onChange={setQuery} autoFocus/>
+          {searching ? <LoadingState title="Loading catalog…" showAfter={2}/> : null}
           <div className="results-grid">
             {searching && Array.from({ length: 6 }).map((_, i) => <SkelTile key={i}/>)}
             {!searching && searchError && (

@@ -48,6 +48,7 @@ function DemoProfileFlow({ onBack, onPick }) {
         title="Pick a saved profile"
         sub="Each profile is anonymized. We use its rating history to seed recommendations — nothing personal is shown."
       />
+      {loading ? <LoadingState title="Loading profiles…" showAfter={2}/> : null}
       <div className="profile-grid">
         {loading && Array.from({ length: 6 }).map((_, i) => <SkelProfile key={i}/>)}
         {!loading && users.length === 0 && (

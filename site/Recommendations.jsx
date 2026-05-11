@@ -101,8 +101,8 @@ function Recommendations({ data, onRestart, onOpenNotes }) {
         <div className="results-head">
           <Eyebrow>Today's picks</Eyebrow>
           <h2 className="results-title">Pulling a few you might love…</h2>
-          <p className="results-sub">The model is sampling — a moment.</p>
         </div>
+        <LoadingState title="Generating…"/>
         <div className="rec-grid">
           {Array.from({ length: 6 }).map((_, i) => <SkelRecCard key={i}/>)}
         </div>

@@ -8,10 +8,53 @@
   <link rel="icon" type="image/svg+xml" href="./assets/motifs/petal.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://upskin-api.onrender.com" crossorigin/>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin/>
+  <link rel="preload" as="script" href="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"/>
   <link rel="stylesheet" href="./site.css"/>
+  <style>
+    /* Splash shown before React mounts. createRoot replaces it. */
+    .boot-splash {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; padding: 32px; text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      color: #2b1f1a; background: #fdf7f2;
+    }
+    .boot-spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid rgba(190, 90, 90, .18);
+      border-top-color: #b85050;
+      animation: bootspin 0.9s linear infinite;
+    }
+    @keyframes bootspin { to { transform: rotate(360deg); } }
+    .boot-title { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+    .boot-body { font-size: 14px; max-width: 460px; line-height: 1.5; opacity: .75; }
+    .boot-reason { font-size: 13px; max-width: 460px; line-height: 1.5; opacity: .6; }
+    .boot-elapsed { font-size: 12px; opacity: .55; font-variant-numeric: tabular-nums;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div class="boot-splash" role="status" aria-live="polite">
+      <div class="boot-spinner" aria-hidden="true"></div>
+      <div class="boot-title">Loading…</div>
+      <div class="boot-reason">First visit may take ~30s while the backend wakes.</div>
+      <div class="boot-elapsed" id="boot-elapsed">0s</div>
+    </div>
+    <script>
+      (function () {
+        var t0 = Date.now();
+        var el = document.getElementById("boot-elapsed");
+        var iv = setInterval(function () {
+          if (!document.getElementById("boot-elapsed")) { clearInterval(iv); return; }
+          var s = Math.floor((Date.now() - t0) / 1000);
+          el.textContent = s + "s";
+        }, 500);
+      })();
+    </script>
+  </div>
 
   <script>
     // ---- Asset path ----
@@ -38,8 +81,8 @@
   </script>
 
   <!-- React (UMD) and Babel (browser JSX compiler) for the static site runtime. -->
-  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
 
   <!-- Offline preview layer (used only when the preview query flag is enabled). -->
@@ -48,6 +91,14 @@
 
   <!-- Runtime deploy config. Set apiUrl in runtime-config.js on static hosts. -->
   <script src="./runtime-config.js"></script>
+
+  <!-- Warm the backend in parallel with Babel compile so the first API call returns fast. -->
+  <script>
+    try {
+      var base = (window.__UPSKIN_RUNTIME_CONFIG && window.__UPSKIN_RUNTIME_CONFIG.apiUrl) || "";
+      if (base) fetch(base + "/health", { mode: "cors", cache: "no-store" }).catch(function () {});
+    } catch (e) {}
+  </script>
 
   <!-- API client (single source of truth; defaults to real FastAPI). -->
   <script src="./api.js"></script>

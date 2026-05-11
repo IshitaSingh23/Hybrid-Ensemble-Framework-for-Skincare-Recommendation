@@ -28,5 +28,39 @@ function EmptyState({ title, body, action }) {
   );
 }
 
+function LoadingState({ title, body, showAfter = 0 }) {
+  const [elapsed, setElapsed] = React.useState(0);
+  const [visible, setVisible] = React.useState(showAfter === 0);
+
+  React.useEffect(() => {
+    const t0 = Date.now();
+    const tick = setInterval(() => {
+      const s = Math.floor((Date.now() - t0) / 1000);
+      setElapsed(s);
+      if (s >= showAfter) setVisible(true);
+    }, 500);
+    return () => clearInterval(tick);
+  }, [showAfter]);
+
+  if (!visible) return null;
+
+  let reason = "";
+  if (elapsed >= 5) reason = "Backend waking…";
+  if (elapsed >= 15) reason = "Cold start (~30–60s).";
+  if (elapsed >= 75) reason = "Service may be down.";
+
+  return (
+    <div className="loading-state" role="status" aria-live="polite">
+      <div className="loading-spinner" aria-hidden="true"/>
+      <div className="loading-text">
+        <div className="loading-title">{title || "Loading…"}</div>
+        {reason ? <div className="loading-reason">{reason}</div> : null}
+        <div className="loading-elapsed mono">{elapsed}s</div>
+      </div>
+    </div>
+  );
+}
+
 window.ErrorState = ErrorState;
 window.EmptyState = EmptyState;
+window.LoadingState = LoadingState;

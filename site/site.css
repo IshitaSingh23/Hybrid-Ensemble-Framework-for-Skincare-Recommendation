@@ -1,6 +1,24 @@
 /* Site-specific styles — extends ./style.css */
 @import url("./style.css");
 
+/* Inline loader used during async fetches */
+.loading-state {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; margin: 8px 0 12px;
+  border-radius: var(--r-md, 10px);
+  background: oklch(96% 0.015 60); border: 1px solid oklch(90% 0.02 60);
+  font-size: 13px;
+}
+.loading-spinner {
+  width: 16px; height: 16px; border-radius: 50%; flex: 0 0 auto;
+  border: 2px solid oklch(80% 0.05 25 / .35); border-top-color: oklch(55% 0.15 25);
+  animation: bootspin 0.9s linear infinite;
+}
+.loading-text { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.loading-title { font-weight: 600; }
+.loading-reason { opacity: .7; }
+.loading-elapsed { opacity: .55; font-variant-numeric: tabular-nums; margin-left: auto; }
+
 /* Status pip variants */
 .status-ok { background: var(--sage-deep); box-shadow: 0 0 0 4px oklch(82% 0.055 145 / 0.4); }
 .status-down { background: oklch(60% 0.13 25); box-shadow: 0 0 0 4px oklch(60% 0.13 25 / 0.25); }
